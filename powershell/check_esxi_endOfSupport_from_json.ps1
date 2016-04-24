@@ -18,6 +18,6 @@ Foreach ($vmHost in $vmHosts) {
   }
   
   If (-Not $releaseFound){
-    Write-Host " - Build $($vmHost.Build) not found in database!" -ForegroundColor Red
+    Write-Host " - $($product) not found in database!" -ForegroundColor Red
   }
 }
