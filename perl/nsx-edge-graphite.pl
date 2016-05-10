@@ -17,6 +17,12 @@ use Data::Dumper;
 $ENV{'PERL_LWP_SSL_VERIFY_HOSTNAME'} = 0; 
 
 # Configuration
+my $nsxUsername  = 'admin';
+my $nsxPassword  = 'password';
+my $nsxMgt       = 'nsg-manager.virten.lab';
+my $prefix       = 'nsx.edge.';
+my $carbonServer = 'graphite.virten.lab';
+my $carbonPort   = 2003;
 my $debug        = 0;
 #
 
