@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 # Author: Florian Grehl - www.virten.net
-#
+# Reference: http://www.virten.net/2016/05/send-nsx-edge-gateway-statistics-to-graphite/ 
 # Description: 
 # Gathers NSX Edge Gateway statistics from the REST API and sends them to a 
 # Carbon Cache Relay to create graphs with Graphite. 

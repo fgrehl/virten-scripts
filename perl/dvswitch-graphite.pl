@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 # Author: Florian Grehl - www.virten.net
-#
+# Reference: http://www.virten.net/2016/05/send-dvswitch-port-statistics-to-graphite/
 # Description: 
 # Sends VMware Distributed Switch Port statistics to a Carbon Cache Relay to 
 # create graphs with Graphite. Target can be a vCenter Server or ESXi Host. 

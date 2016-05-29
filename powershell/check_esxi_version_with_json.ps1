@@ -1,3 +1,8 @@
+# Author: Florian Grehl - www.virten.net
+# Reference: http://www.virten.net/2016/04/esxi-version-information-now-available-as-json-incl-script-example/ 
+# Description: ESXi Build Numbers JSON demonstration
+#
+
 $esxiReleases = Invoke-WebRequest -Uri http://www.virten.net/repo/esxiReleases.json | ConvertFrom-Json
 $vmHosts = Get-VMHost
 

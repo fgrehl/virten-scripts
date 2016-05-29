@@ -1,4 +1,9 @@
-﻿$vmwareProductLifecycle = Invoke-WebRequest -Uri http://www.virten.net/repo/vmwareProductLifecycle.json | ConvertFrom-Json
+# Author: Florian Grehl - www.virten.net
+# Reference: http://www.virten.net/2016/04/product-end-of-support-matrix-now-available-as-json-incl-script/ 
+# Description: Displays ESXi end of support date
+#
+
+$vmwareProductLifecycle = Invoke-WebRequest -Uri http://www.virten.net/repo/vmwareProductLifecycle.json | ConvertFrom-Json
 $vmHosts = Get-VMHost
 
 Foreach ($vmHost in $vmHosts) {
