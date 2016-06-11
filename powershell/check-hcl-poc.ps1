@@ -1,4 +1,4 @@
-﻿# Check ESXi Hosts against VMware HCL
+# Check ESXi Hosts against VMware HCL
 # Does not use live VMware HCL data, but a copied JSON based version
 # Needs to be connected to a vCenter Server (Connect-VIServer), or can use fake data from a CSV
 # Does not upload any sensitive information. Downloads a full HCL copy and compares it locally.
@@ -70,12 +70,41 @@ Foreach ($vmHost in $vmHosts) {
     # Cisco UCS models do not match either. Also some fuzziness required
     # ...need more Hardware to test. 
     #If ($HostModel -eq $server.model) { # Works vor HP and Dell, where string matches 100%
+    $ModelFound = $false
+    if ($HostModel.StartsWith("UCS") -and $ModelMatch.Contains("UCS")){
+      $HostLen=$HostModel.Length
+
+      #   UCSB - B200 -  M  3
+      #   1234 5 6789 10 11 12
+
+      #   UCSC - C240 -  M  3  S  2
+      #   1234 5 6579 10 11 12 13 14      
+      $UCS_MODEL=$HostModel.Substring(5,4)
+      if ($HostLen -eq 12) {
+        $UCS_GEN=$HostModel.Substring(10,2)
+      }
+      if ($HostLen -eq 14) {
+        $UCS_GEN=$HostModel.Substring(10,3)
+      }
+
+      $isUCSMODEL=$ModelMatch.Contains($UCS_MODEL)
+      if ($isUCSMODEL -eq "True") {
+        $isUCSGEN=$ModelMatch.Contains($UCS_GEN)
+        if ($isUCSGEN -eq "True") {
+          $ModelFound = $true
+        }
+      }
+    }
+
     $ModelMatch = $server.model 
     $ModelMatch = $ModelMatch -replace "IBM ","" # IBM writes "IBM" in front of models sometimes. Need to remove it
     $ModelMatch = ("*"+$ModelMatch+"*") # Not all entries are 100% matches. Simple wildcard matching
     #Write-Host "Model Match String:" $ModelMatch
     If ($HostModel -like $ModelMatch) { 
+      $ModelFound = $true
+    }
 
+    If ($ModelFound) { 
       # Matching CPU Series to CPU Model requires fuzzy matching
       # This filter works with Intel Xenon CPUs:
       if($server.cpuSeries -like "Intel Xeon*"){
