@@ -82,15 +82,22 @@
         $ModelMatch = $server.model 
         $ModelMatch = $ModelMatch -replace "IBM ",""
         $ModelMatch = ("*"+$ModelMatch+"*")
-        If ($HostModel -like $ModelMatch) { 
-          $ModelFound = $true
+        if ($HostManuf -eq "HP"){
+          If ($HostModel -like $ModelMatch -and $server.manufacturer -eq $HostManuf) { 
+            $ModelFound = $true
+          }
+        } else {
+          If ($HostModel -like $ModelMatch) { 
+            $ModelFound = $true
+          }
         }
 
         If ($ModelFound) { 
           If($server.cpuSeries -like "Intel Xeon*"){
-            $cpuSeriesMatch = $server.cpuSeries -replace "Intel Xeon ","" -replace " Series","" -replace "00","??" -replace "xx","??"  -replace "-v"," v"
+            $cpuSeriesMatch = $server.cpuSeries -replace "Intel Xeon ","" -replace " Series","" -replace "00","??" -replace "xx","??" -replace "-v"," v"
+            $HostCpuMatch = $HostCpu -replace " 0 @"," @"
             $cpuSeriesMatch = ("*"+$cpuSeriesMatch+" @*")
-            if ($HostCpu -notlike $cpuSeriesMatch){
+            if ($HostCpuMatch -notlike $cpuSeriesMatch){
               continue
             }
           }
