@@ -95,7 +95,7 @@
         If ($ModelFound) { 
           If($server.cpuSeries -like "Intel Xeon*"){
             $cpuSeriesMatch = $server.cpuSeries -replace "Intel Xeon ","" -replace " Series","" -replace "00","??" -replace "xx","??" -replace "-v"," v"
-            $HostCpuMatch = $HostCpu -replace " 0 @"," @"
+            $HostCpuMatch = $HostCpu -replace " 0 @"," @" -replace "- ","-" -replace "  "," "
             $cpuSeriesMatch = ("*"+$cpuSeriesMatch+" @*")
             if ($HostCpuMatch -notlike $cpuSeriesMatch){
               continue
