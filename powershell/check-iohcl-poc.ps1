@@ -3,6 +3,9 @@
 # Needs to be connected to a vCenter Server (Connect-VIServer)
 # Does not upload any sensitive information. Downloads a full HCL copy and compares it locally.
 # Script is just a Proof of Concept...
+#
+# The script uses Get-EsxCli -V2 which requires at least PowerCLI 6.3 R1
+
 
 # Configure device scope. Change the $devices variable to match the host you want to check.
 # You can check multiple hosts at once, but please note that the Script needs to call esxcli 
