@@ -27,10 +27,10 @@ Foreach ($device in $devices) {
   $Info.DeviceName = $device.DeviceName
   $Info.VendorName = $device.VendorName
   $Info.DeviceClass = $device.DeviceClass
-  $Info.vid = [String]::Format("{0:x}", $HBA.VendorId)
-  $Info.did = [String]::Format("{0:x}", $HBA.DeviceId)
-  $Info.svid = [String]::Format("{0:x}", $HBA.SubVendorId)
-  $Info.ssid = [String]::Format("{0:x}", $HBA.SubDeviceId)
+  $Info.vid = [String]::Format("{0:x}", $device.VendorId)
+  $Info.did = [String]::Format("{0:x}", $device.DeviceId)
+  $Info.svid = [String]::Format("{0:x}", $device.SubVendorId)
+  $Info.ssid = [String]::Format("{0:x}", $device.SubDeviceId)
 
   if ($device.DeviceClass -eq "NetworkController"){
     # Get NIC list to identify vmnicX from PCI slot Id
