@@ -10,7 +10,7 @@
 # Configure device scope. Change the $devices variable to match the host you want to check.
 # You can check multiple hosts at once, but please note that the Script needs to call esxcli 
 # to identify driver and firmware versions. This can take about 20-40 seconds per host.
-$devices = Get-VMHost esx01.virten.lab | Get-VMHostPciDevice | where { $_.DeviceClass -eq "MassStorageController" -or $_.DeviceClass -eq "NetworkController" -or $_.DeviceClass -eq "SerialBusController"} 
+$devices = Get-VMHost | Get-VMHostPciDevice | where { $_.DeviceClass -eq "MassStorageController" -or $_.DeviceClass -eq "NetworkController" -or $_.DeviceClass -eq "SerialBusController"} 
 
 # Uncomment this line to enable debug output
 #$DebugPreference = "Continue"
