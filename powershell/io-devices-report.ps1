@@ -30,10 +30,10 @@ Foreach ($device in $devices) {
   $Info.DeviceName = $device.DeviceName
   $Info.VendorName = $device.VendorName
   $Info.DeviceClass = $device.DeviceClass
-  $Info.vid = [String]::Format("{0:x}", $device.VendorId)
-  $Info.did = [String]::Format("{0:x}", $device.DeviceId)
-  $Info.svid = [String]::Format("{0:x}", $device.SubVendorId)
-  $Info.ssid = [String]::Format("{0:x}", $device.SubDeviceId)
+  $Info.vid = [String]::Format("{0:x4}", $device.VendorId)
+  $Info.did = [String]::Format("{0:x4}", $device.DeviceId)
+  $Info.svid = [String]::Format("{0:x4}", $device.SubVendorId)
+  $Info.ssid = [String]::Format("{0:x4}", $device.SubDeviceId)
 
   # Search HCL entry with PCI IDs VID, DID, SVID and SSID
   Foreach ($entry in $hcl.data.ioDevices) {
