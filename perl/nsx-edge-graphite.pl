@@ -40,6 +40,7 @@ my $headers = {
 foreach my $edge (callNSX("https://".$nsxMgt."/api/4.0/edges/")->findnodes('/pagedEdgeList/edgePage/edgeSummary')) {
   my($edgeId) = $edge->findnodes('./id')->to_literal;
   my($edgeName) = $edge->findnodes('./name')->to_literal;
+  $edgeName=~ tr/[. ]/_/;
 
   my $vnics = {};
   my $dashboard = callNSX("https://".$nsxMgt."/api/4.0/edges/".$edgeId."/statistics/dashboard/interface?interval=1");
