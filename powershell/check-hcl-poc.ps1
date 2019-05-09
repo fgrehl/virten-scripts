@@ -71,6 +71,7 @@ Foreach ($vmHost in $vmHosts) {
     # ...need more Hardware to test. 
     #If ($HostModel -eq $server.model) { # Works vor HP and Dell, where string matches 100%
     $ModelFound = $false
+    $ModelMatch = $server.model 
     if ($HostModel.StartsWith("UCS") -and $ModelMatch.Contains("UCS")){
       $HostLen=$HostModel.Length
 
@@ -96,7 +97,6 @@ Foreach ($vmHost in $vmHosts) {
       }
     }
 
-    $ModelMatch = $server.model 
     $ModelMatch = $ModelMatch -replace "IBM ","" # IBM writes "IBM" in front of models sometimes. Need to remove it
     $ModelMatch = ("*"+$ModelMatch+"*") # Not all entries are 100% matches. Simple wildcard matching
     #Write-Host "Model Match String:" $ModelMatch
