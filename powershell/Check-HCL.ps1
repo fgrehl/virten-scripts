@@ -93,12 +93,21 @@
         }
 
         If ($ModelFound) { 
-          If($server.cpuSeries -like "Intel Xeon*"){
-            $cpuSeriesMatch = $server.cpuSeries -replace "Intel Xeon ","" -replace " Series","" -replace "00","??" -replace "xx","??" -replace "-v"," v"
-            $HostCpuMatch = $HostCpu -replace " 0 @"," @" -replace "- ","-" -replace "  "," "
-            $cpuSeriesMatch = ("*"+$cpuSeriesMatch+" @*")
-            if ($HostCpuMatch -notlike $cpuSeriesMatch){
-              continue
+          If($server.cpuSeries -like "Intel Xeon*"){ 
+            if ($HostCpu -like "*Gold*" -Or $HostCpu -like "*Silver*" -Or $HostCpu -like "*Bronze*" -Or  $HostCpu -like "*Platinum*"){
+              $HostCpuMatch = $HostCpu -replace " 0 @"," @" -replace "- ","-" -replace "  "," "
+              $HostCpuMatch = $HostCpu -replace '\D+([0-9]*).*','$1'
+              $HostCpuMatch = "*$($HostCpuMatch.Substring(0,2))00*"
+              if ($server.cpuSeries -notlike $HostCpuMatch){
+                continue
+              }
+            } else {
+              $cpuSeriesMatch = $server.cpuSeries -replace "Intel Xeon ","" -replace " Series","" -replace "00","??" -replace "xx","??" -replace "-v"," v"
+              $HostCpuMatch = $HostCpu -replace " 0 @"," @" -replace "- ","-" -replace "  "," "
+              $cpuSeriesMatch = ("*"+$cpuSeriesMatch+" @*")
+              if ($HostCpuMatch -notlike $cpuSeriesMatch){
+                continue
+              }
             }
           }
           $helper = New-Object PSObject
@@ -121,8 +130,8 @@
           $Info.SupportedReleases = $obj.Releases
           $Info.Reference = $($obj.url)
         }
-      } elseif ($Data.Count > 1){
-        $Info.Note = "More than 2 HCL Entries found." 
+      } elseif ($Data.Count -gt 1){
+        $Info.Note = "More than 1 HCL Entries found." 
       } else {
         $Info.supported = $false
         $Info.Note = "No HCL Entries found." 
