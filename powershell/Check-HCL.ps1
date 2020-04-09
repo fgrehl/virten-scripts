@@ -24,11 +24,14 @@
   )
   Begin{
     $esxiReleases = Invoke-WebRequest -Uri http://www.virten.net/repo/esxiReleases.json | ConvertFrom-Json
-    $hclJson = Invoke-WebRequest -Uri http://www.virten.net/repo/vmware-hcl.json
-    [void][System.Reflection.Assembly]::LoadWithPartialName("System.Web.Extensions")        
-    $jsonserializer= New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer 
-    $jsonserializer.MaxJsonLength = [int]::MaxValue
-    $hcl = $jsonserializer.DeserializeObject($hclJson)
+    $hcl = Invoke-WebRequest -Uri http://www.virten.net/repo/vmware-hcl.json | ConvertFrom-Json
+    
+    # Workaround when json import is > 2 MB
+    #$hclJson = Invoke-WebRequest -Uri http://www.virten.net/repo/vmware-hcl.json
+    #[void][System.Reflection.Assembly]::LoadWithPartialName("System.Web.Extensions")        
+    #$jsonserializer= New-Object -TypeName System.Web.Script.Serialization.JavaScriptSerializer 
+    #$jsonserializer.MaxJsonLength = [int]::MaxValue
+    #$hcl = $jsonserializer.DeserializeObject($hclJson)
   }
   Process {
     if (-not $vmHosts) {
