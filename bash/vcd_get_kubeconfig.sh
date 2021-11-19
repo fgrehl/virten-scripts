@@ -25,4 +25,4 @@ ACCEPT="Accept: */*;version=36.0"
 CRED=$(echo -n $USER:$PASSWORD |base64)
 TOKEN=$(curl -sI -k --header "$ACCEPT" --header "Authorization: Basic $CRED" --request POST https://$VCD/api/sessions | tr -d '\r' | sed -En 's/^x-vcloud-authorization: (.*)/\1/p')
 CLUSTERID=$(curl -s -k --header "$ACCEPT" --header "x-vcloud-authorization: $TOKEN" --request GET https://$VCD/api/cse/3.0/cluster | jq  '.[] | select(.name=="'$CLUSTER'")' | jq -r  '.id')
-curl -s -k --header "$ACCEPT" --header "x-vcloud-authorization: $TOKEN" --request GET https://$VCD/api/cse/3.0/cluster/$CLUSTERID/config | jq -r '.message' #  | tr -d '"' |sed 's/\\n/\n/g'
+curl -s -k --header "$ACCEPT" --header "x-vcloud-authorization: $TOKEN" --request GET https://$VCD/api/cse/3.0/cluster/$CLUSTERID/config | jq -r '.message'
