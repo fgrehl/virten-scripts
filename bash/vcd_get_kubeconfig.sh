@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Get kubeconfig from VMware Cloud Director 10.3 with Container Service Extension
-# Usage: getconfig2.sh --user USER@ORG --password PASSWORD -vcd VCDURL --cluster CLUSTERNAME
+# Usage: vcd_get_kubeconfig.sh --user USER@ORG --password PASSWORD -vcd VCDURL --cluster CLUSTERNAME
 
 while [[ "$#" -gt 0 ]]; do
   case $1 in
@@ -16,8 +16,8 @@ done
 
 if [[ -z $USER || -z $PASSWORD || -z $CLUSTER || -z $VCD ]]; then
  echo 'Missing parameter. Try:'
- echo 'getconfig2.sh -u USER@ORG -p PASSWORD -v VCDURL -c CLUSTERNAME'
- echo 'getconfig2.sh --user USER@ORG --password PASSWORD -vcd VCDURL --cluster CLUSTERNAME'
+ echo 'vcd_get_kubeconfig.sh -u USER@ORG -p PASSWORD -v VCDURL -c CLUSTERNAME'
+ echo 'vcd_get_kubeconfig.sh --user USER@ORG --password PASSWORD -vcd VCDURL --cluster CLUSTERNAME'
  exit 1
 fi
 
