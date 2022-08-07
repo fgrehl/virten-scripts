@@ -74,12 +74,15 @@ Foreach ($device in $devices) {
       $vmhbaId = $device.VMHost |Get-VMHostHba -ErrorAction SilentlyContinue | where { $_.PCI -like '*'+$device.Id} 
       $Info.Device = $vmhbaId.Device
       $Info.Driver = $vmhbaId.Driver
-    
+      # fix lsi_mr3 to lsi-mr3
+      $vibnamefixed = $vmhbaId.Driver
+      $vibnamefixed = $vibnamefixed -replace"_","-"
+      
       # Get driver vib package version
       Try{
-        $driverVib = $esxcli.software.vib.get.Invoke(@{vibname = "scsi-"+$vmhbaId.Driver})
+        $driverVib = $esxcli.software.vib.get.Invoke(@{vibname = "scsi-"+$vibnamefixed})
       }Catch{
-        $driverVib = $esxcli.software.vib.get.Invoke(@{vibname = $vmhbaId.Driver})
+        $driverVib = $esxcli.software.vib.get.Invoke(@{vibname = $vibnamefixed})
       }
       $Info.VibVersion = $driverVib.Version
     }
